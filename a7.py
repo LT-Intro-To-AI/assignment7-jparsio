@@ -1,4 +1,6 @@
+import csv
 from neural import NeuralNet 
+import neural_net_UCI_data as nn_uci
 
 voter_opinion = [
     ([0.9,0.6,0.8,0.3,0.1], [1.0]),
@@ -11,15 +13,9 @@ voter_opinion = [
 
 von = NeuralNet(5,10,1)
 
-von.train(voter_opinion)
-print(von.test_with_expected(voter_opinion))
 
-test_data = [
-    [1.0,1.0,1.0,0.1,0.1],
-    [0.5,0.2,0.1,0.7,0.7],
-    [0.8,0.3,0.3,0.3,0.8],
-    [0.8,0.3,0.3,0.8,0.3],
-    [0.9,0.8,0.8,0.3,0.6]
-]
-for i in range(len(test_data)):
-    print(f"case {i}: {von.evaluate(test_data[i])}")
+file = open("rice.txt", "r").readlines()
+vals = [nn_uci.parse_line(line) for line in file]
+vals = nn_uci.normalize(vals)
+print(vals)
+
